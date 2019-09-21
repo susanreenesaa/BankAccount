@@ -1,3 +1,5 @@
+// how to include an else in the findAccount fntn
+// failled to check that the account exists when creating an account.(creatAccount(accountNumber){}
 class BankAccount {
     constructor(firstName, lastName, accountNumber, accountPin, amount ){
         this.lastName = lastName;
@@ -22,10 +24,10 @@ class BankAccount {
     
           // var accountBalance = this.totalAmount + this.depositeAmount - this.withdrawAmount;
           var accountBalance =this.accounts.accountBalance
-          return  accountBalance;
+          return foundAccount.fullName + "your account balance is" + foundAccount.accountBalance;
         }
         else{
-          return "Your account is blocked. activate it to carry out transactions"
+          return foundAccount.fullName + "Your account is blocked. activate it to carry out transactions"
         }
       }
       else{
@@ -42,32 +44,36 @@ class BankAccount {
     }
   
     creatAccount(accountNumber){
-      var foundAccount= this.findAccount(accountNumber);
-      var userInfo = {
-          fullName:this.firstName + " " + this.lastName,
-          accountNumber: this.accountNumber,
-          accountPin: this.accountPin,
-          accountBalance: this.accountBalance
-      }
-      if (this.firstName.length < 2 || this.lastName.length < 2){
-          if( isNaN(this.accountNumber || this.accountPin)){
-            if(this.accountNumber===foundAccount.accountNumber){
-              return "The acount number already exists. please use another number."
-            }
-          
-          return "Ivalid input try again.";
-          
-          }
+        var foundAccount= this.findAccount(accountNumber)
+         var userInfo = {}
+      if ((this.firstName.length < 2) || (this.lastName.length < 2)){
+
+      return "Invalid input. \n User names should not be less than two characters.";
   
-        }
+                }
+      else{  
+        if( typeof this.accountNumber !=="number"|| typeof this.accountPin !== "number"){
+          return "Invalid input. \n Account number or account pin should be numbers";
+         }
         else{
-          //   dose not push more than one item
-          return this.accounts.push(userInfo);
-           // console.log("Your account has been successfully created \n your details are " + accountDetails);
+          if(!foundAccount){
+            userInfo = {
+              fullName:this.firstName + " " + this.lastName,
+              accountNumber: this.accountNumber,
+              accountPin: this.accountPin,
+              accountBalance: this.accountBalance
+          }
+            return this.accounts.push(userInfo);
+
+            }
+           else{
+            return "The acount number already exists. please use another number."
           
-        }
-        
+           }
+          }
+          } 
       }
+    
   
     open(action) {
       // var accountActive="Account is active";
@@ -98,7 +104,8 @@ class BankAccount {
           foundAccount = account;
           
           }
-        });
+          });
+          
         return foundAccount;
    
       }
@@ -112,7 +119,7 @@ class BankAccount {
       
             if ((typeof depositAmount=="number")){
               foundAccount.accountBalance += depositAmount;
-              return "You have deposited " + depositAmount + " on " + foundAccount.fullName +"\'s account" ;
+              return "You have deposited " + depositAmount + " on " + foundAccount.fullName +" \'s account" ;
             }
             else{
               return "Enter correct Account Number or Valid shillings."
@@ -141,14 +148,14 @@ class BankAccount {
 
           }
           else{
-            return "You dont have Sufficient funds on your account for that transaction \n Your account balance is " + foundAccount.accountBalance 
+            return foundAccount.fullName + " You dont have Sufficient funds on your account for that transaction \n Your account balance is " + foundAccount.accountBalance 
           }
         }
-      }
         else{
-          return "enter a correct account number or pin number "
+          return " Invalid input \n Enter numbers to withdraw"
         }
       }
+              }
       else{
         return "Your account is blocked. activate it to carry out transactions"
       }
@@ -165,16 +172,23 @@ class BankAccount {
       // break;
 }
 }
+
+module.exports = BankAccount;
+
 var BankAcount1 =new BankAccount("susan","Ninsiima",500, 500,7000);
-var BankAcount2 =new BankAccount("hellen","Allena",400, 250,10000);
+var BankAcount2 =new BankAccount("hellen","Allena","400", "250",10000);
+var BankAcount3 =new BankAccount("s","Ninsiima",500, 500,7000);
 
-// storing the created account to the accounts array
-console.log(BankAcount1.creatAccount())
-console.log(BankAcount2.creatAccount())
-BankAcount1.status="blocked";
 
-// finding a created account
-console.log(BankAcount2.findAccount(400));
+// // storing the created account to the accounts array
+// console.log(BankAcount1.creatAccount())
+console.log(BankAcount3.creatAccount())
+
+// BankAcount1.status="blocked";
+
+// // finding a created account
+// console.log(BankAcount3.findAccount(500))
  
-// showing that no trasaction can take place on a blocked account.
-console.log( BankAcount1.deposit(500,1000));
+// // showing that no trasaction can take place on a blocked account.
+// console.log( BankAcount1.deposit(500,1000));
+
