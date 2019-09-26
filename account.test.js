@@ -7,7 +7,7 @@ const account4 = new BankAccount( "s","Ninsiima",70, 500,7000)
 
 account1.creatAccount(500);
 account2.creatAccount(8000);
-account2.status="blocked";
+account2.close();
 
 // TEST FOR CREATING AN ACCOUNT
 test( 'Creating or Opening bank account with a string input for account number', ()=> {
@@ -22,12 +22,12 @@ test( 'Creating or Opening bank account with names of charaters which are less t
 
 // TESTS FOR OBTAINING THE ACCOUNT BALANCE
 test('Obtaining the balance with a valid account number', () => {
-        expect(account1.getBalance(500)).toBe(account1.firstName + ' ' + account1.lastName  + "your account balance is" + account1.accountBalance)
+        expect(account1.getBalance(500)).toBe(`${ account1.firstName} ${ account1.lastName} your account balance is ${ account1.accountBalance}`)
     });
 
 
 test('Obtaining the balance of a blocked account', () => {
-        expect(account2.getBalance(8000)).toBe(account1.firstName + ' ' + account1.lastName  + "Your account is blocked. activate it to carry out transactions")
+        expect(account2.getBalance(8000)).toBe(`${ account1.firstName} ${ account1.lastName } Your account is blocked. Activate it to carry out transactions`)
     });
 
 test('Obtaining the balance with a wrong account or invalid number', () => {
@@ -42,8 +42,8 @@ test('Withdrawing with an invalid account number', () => {
 
 test('Withdrawing money that exceeds that which is on the account - 10', () => {
     
-    expect(account1.withdraw(500, 500,10000)).toBe(account1.firstName + ' ' + account1.lastName  + " You dont have Sufficient funds on your account for that transaction \n Your account balance is " + account1.accountBalance
-    )
+    expect(account1.withdraw(500, 500,10000)).toBe(`${ account1.firstName} ${account1.lastName} You dont have Sufficient funds on your account for that transaction \n Your account balance is ${ account1.accountBalance}`);
+    
 });
 
 test('Withdrawing money that is below the accountbalance -10', () => {
@@ -64,14 +64,14 @@ test('Entering a wrong pin or account number when Withdrawing', () => {
 
 test('Withdrawing from  a blocked account', () => {
     
-    expect(account2.withdraw(8000, 500,700)).toBe("Your account is blocked. activate it to carry out transactions"
+    expect(account2.withdraw(8000, 500,700)).toBe("Your account is blocked. Activate it to carry out transactions"
     )
 });
 
 // TESTS FOR THE DEPOSIT FUNCTION
 test('Depositing to a blocked account', () => {
     
-    expect(account2.deposit(8000,70000)).toBe("Your account is blocked. activate it to carry out transactions")
+    expect(account2.deposit(8000,70000)).toBe("Your account is blocked. Activate it to carry out transactions")
 });
 
 test('Depositing with an invalid account number', () => {
@@ -83,6 +83,6 @@ test('deposite a mount is not numbers', () => {
 });
 
 test(' making a successful deposit deposite ', () => {
-    expect(account1.deposit(500,700)).toBe("You have deposited " + 700 + " on " + account1.firstName + ' ' + account1.lastName  +" \'s account")
+    expect(account1.deposit(500,700)).toBe(`You have deposited 700 on ${ account1.firstName} ${ account1.lastName}\'s account`)
 });
 
